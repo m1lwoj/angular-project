@@ -5,7 +5,18 @@
     <title>Document</title>
 </head>
 <body ng-app="app">
-    <h1>Hello</h1>
-    <script src="bundle.js"></script>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li>
+            <a ui-sref="todo">Home</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+        <ui-view></ui-view>
+    </div>
+    <script type="text/javascript" src="bundle.js"></script>
 </body>
-</html> 
+</html>
