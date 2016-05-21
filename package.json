@@ -5,8 +5,11 @@
   },
   "dependencies": {
     "angular": "^1.5.0",
+    "angular-route": "^1.5.5",
     "angular-ui-router": "^0.2.18",
     "bootstrap": "^3.3.6",
+    "todomvc-app-css": "^1.0.1",
+    "todomvc-common": "^1.0.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
