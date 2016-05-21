@@ -1,82 +1,72 @@
 export default class ToDoLocalStorageService {
-   constructor() {
-        this.$q = null;
-    }
-    
-	getStorage($q) {
-		'use strict';
+  constructor($q) {
 		this.$q = $q;
-		var STORAGE_ID = 'todos-angularjs';
+		this.STORAGE_ID = 'todos-angularjs';
+		this.todos = new Array();
+	}
 
-		var store = {
-			todos: [],
+	_getFromLocalStorage() {
+		return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
+	}
 
-			_getFromLocalStorage: function() {
-				return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
-			},
+	_saveToLocalStorage(todos) {
+		localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
+	}
 
-			_saveToLocalStorage: function(todos) {
-				localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
-			},
+	clearCompleted() {
+		var deferred = this.$q.defer();
 
-			clearCompleted: function() {
-				var deferred = this.$q.defer();
+		var incompleteTodos = this.todos.filter(function(todo) {
+			return !todo.completed;
+		});
 
-				var incompleteTodos = store.todos.filter(function(todo) {
-					return !todo.completed;
-				});
+		angular.copy(incompleteTodos, this.todos);
 
-				angular.copy(incompleteTodos, store.todos);
+		this._saveToLocalStorage(this.todos);
+		deferred.resolve(this.todos);
 
-				store._saveToLocalStorage(store.todos);
-				deferred.resolve(store.todos);
+		return deferred.promise;
+	}
 
-				return deferred.promise;
-			},
+	delete(todo) {
+		var deferred = this.$q.defer();
 
-			delete: function(todo) {
-				var deferred = this.$q.defer();
+		this.todos.splice(this.todos.indexOf(todo), 1);
 
-				store.todos.splice(store.todos.indexOf(todo), 1);
+		this._saveToLocalStorage(this.todos);
+		deferred.resolve(this.todos);
 
-				store._saveToLocalStorage(store.todos);
-				deferred.resolve(store.todos);
+		return deferred.promise;
+	}
 
-				return deferred.promise;
-			},
+	get() {
+		var deferred = this.$q.defer();
 
-			get: function() {
-				var deferred = this.$q.defer();
+		angular.copy(this._getFromLocalStorage(), this.todos);
+		deferred.resolve(this.todos);
 
-				angular.copy(store._getFromLocalStorage(), store.todos);
-				deferred.resolve(store.todos);
+		return deferred.promise;
+	}
 
-				return deferred.promise;
-			},
+	insert(todo) {
+		var deferred = this.$q.defer();
 
-			insert: function(todo) {
-				var deferred = this.$q.defer();
+		this.todos.push(todo);
 
-				store.todos.push(todo);
+		this._saveToLocalStorage(this.todos);
+		deferred.resolve(this.todos);
 
-				store._saveToLocalStorage(store.todos);
-				deferred.resolve(store.todos);
+		return deferred.promise;
+	}
 
-				return deferred.promise;
-			},
+	put(todo, index) {
+		var deferred = this.$q.defer();
 
-			put: function(todo, index) {
-				var deferred = this.$q.defer();
+		this.todos[index] = todo;
 
-				store.todos[index] = todo;
+		this._saveToLocalStorage(this.todos);
+		deferred.resolve(this.todos);
 
-				store._saveToLocalStorage(store.todos);
-				deferred.resolve(store.todos);
-
-				return deferred.promise;
-			}
-		};
-
-		return store;
+		return deferred.promise;
 	}
 }

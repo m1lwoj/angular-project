@@ -1,4 +1,4 @@
-export default function routes($stateProvider) {
+export default function routes($stateProvider, $routeProvider) {
   $stateProvider
     .state('todo', {
       url: '/',
@@ -15,4 +15,5 @@ export default function routes($stateProvider) {
 // 				}
 // 			}
     });
+ 
 }

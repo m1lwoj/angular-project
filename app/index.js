@@ -16,5 +16,3 @@ const ngModule = angular
           todo
         ])
         .config(routing);
-        
-alert(ngModule);
