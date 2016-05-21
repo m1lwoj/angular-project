@@ -1,15 +1,15 @@
 export default class ToDoController {
-  constructor(ToDoStorage) {
+  constructor() {
     alert('tu');
     this.name = 'todo';
     // this.scope = $scope;
     // this.store = store;
   }
 
-  TodoCtrl($scope, $routeParams, $filter, store) {
+  TodoCtrl($scope, $routeParams, $filter, ToDoStorage) {
     'use strict';
 
-    var todos = $scope.todos = store.todos;
+    var todos = $scope.todos = ToDoStorage.todos;
 
     $scope.newTodo = '';
     $scope.editedTodo = null;
@@ -43,7 +43,7 @@ export default class ToDoController {
       }
 
       $scope.saving = true;
-      store.insert(newTodo)
+      ToDoStorage.insert(newTodo)
         .then(function success() {
           $scope.newTodo = '';
         })
@@ -81,7 +81,7 @@ export default class ToDoController {
         return;
       }
 
-      store[todo.title ? 'put' : 'delete'](todo)
+      ToDoStorage[todo.title ? 'put' : 'delete'](todo)
         .then(function success() {}, function error() {
           todo.title = $scope.originalTodo.title;
         })
@@ -98,25 +98,25 @@ export default class ToDoController {
     };
 
     $scope.removeTodo = function(todo) {
-      store.delete(todo);
+      ToDoStorage.delete(todo);
     };
 
     $scope.saveTodo = function(todo) {
-      store.put(todo);
+      ToDoStorage.put(todo);
     };
 
     $scope.toggleCompleted = function(todo, completed) {
       if (angular.isDefined(completed)) {
         todo.completed = completed;
       }
-      store.put(todo, todos.indexOf(todo))
+      ToDoStorage.put(todo, todos.indexOf(todo))
         .then(function success() {}, function error() {
           todo.completed = !todo.completed;
         });
     };
 
     $scope.clearCompletedTodos = function() {
-      store.clearCompleted();
+      ToDoStorage.clearCompleted();
     };
 
     $scope.markAll = function(completed) {

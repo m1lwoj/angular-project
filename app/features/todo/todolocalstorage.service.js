@@ -1,8 +1,11 @@
 export default class ToDoLocalStorageService {
-
+   constructor() {
+        this.$q = null;
+    }
+    
 	getStorage($q) {
 		'use strict';
-
+		this.$q = $q;
 		var STORAGE_ID = 'todos-angularjs';
 
 		var store = {
