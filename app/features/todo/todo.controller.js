@@ -1,34 +1,25 @@
 export default class ToDoController {
-  constructor($scope, $routeParams, $filter, ToDoStorage) {
+  constructor($scope, $stateParams, $filter, ToDoStorage) {
     'use strict';
 
     this.$scope = $scope;
-    this.$routeParams = $routeParams;
+    this.$stateParams = $stateParams;
     this.$filter = $filter;
     this.ToDoStorage = ToDoStorage;
-
-    var todos = $scope.todos = ToDoStorage.todos;
+    this.$scope.todos = ToDoStorage.todos;
 
     $scope.newTodo = '';
     $scope.editedTodo = null;
+    $scope.remainingCount = 0;
 
-    $scope.$watch('todos', function() {
-      $scope.remainingCount = $filter('filter')(todos, {
-        completed: false
-      }).length;
-      $scope.completedCount = todos.length - $scope.remainingCount;
-      $scope.allChecked = !$scope.remainingCount;
-    }, true);
+    $scope.$watch('todos', this.watchHandler.bind(this), true);
 
     // Monitor the current route for changes and adjust the filter accordingly.
-    $scope.$on('$routeChangeSuccess', function() {
-      var status = $scope.status = $routeParams.status || '';
-      $scope.statusFilter = (status === 'active') ? {
-        completed: false
-      } : (status === 'completed') ? {
-        completed: true
-      } : {};
-    });
+    $scope.$on('$stateChangeSuccess', this.filterWithStatus.bind(this));
+  }
+
+  test() {
+    alert('test2');
   }
 
   addTodo() {
@@ -43,24 +34,46 @@ export default class ToDoController {
 
     this.$scope.saving = true;
 
-     
     this.ToDoStorage.insert(newTodo)
       .then(this.clearToDoInput.bind(this))
       .finally(this.stopSaving.bind(this));
+
+    // this.clearToDoInput();
+    // this.stopSaving();
   };
-  
-  clearToDoInput(){
-     this.$scope.newTodo = '';
-   }
-   
-  stopSaving(){
-     this.$scope.saving = false;
-   }
-   
+
+  filterWithStatus() {
+    var status = this.$scope.status = this.$stateParams.status || '';
+    this.$scope.statusFilter = (status === 'active') ? {
+      completed: false
+    } : (status === 'completed') ? {
+      completed: true
+    } : {};
+  }
+
+  watchHandler() {
+    this.$scope.remainingCount = this.$filter('filter')(this.$scope.todos, {
+      completed: false
+    }).length;
+    this.$scope.completedCount = this.$scope.todos.length - this.$scope.remainingCount;
+    this.$scope.allChecked = !this.$scope.remainingCount;
+  }
+
+  clearToDoInput() {
+    this.$scope.todos = this.ToDoStorage.todos;
+    this.$scope.newTodo = '';
+  }
+
+  stopSaving() {
+    this.$scope.saving = false;
+  }
+
   editTodo(todo) {
+
     this.$scope.editedTodo = todo;
     // Clone the original todo to restore it on demand.
     this.$scope.originalTodo = angular.extend({}, todo);
+
   };
 
   saveEdits(todo, event) {
@@ -103,6 +116,7 @@ export default class ToDoController {
   }
 
   removeTodo(todo) {
+    alert('c');
     this.ToDoStorage.delete(todo);
   }
 
@@ -114,7 +128,7 @@ export default class ToDoController {
     if (angular.isDefined(completed)) {
       todo.completed = completed;
     }
-    this.ToDoStorage.put(todo, this.todos.indexOf(todo))
+    this.ToDoStorage.put(todo, this.ToDoStorage.todos.indexOf(todo))
       .then(function success() {}, function error() {
         todo.completed = !todo.completed;
       });
@@ -122,13 +136,21 @@ export default class ToDoController {
 
   clearCompletedTodos() {
     this.ToDoStorage.clearCompleted();
-  };
+  }
+
+  changeStatus(status) {
+    this.$scope.status = status;
+  }
 
   markAll(completed) {
-    this.todos.forEach(function(todo) {
-      if (todo.completed !== completed) {
-        this.$scope.toggleCompleted(todo, completed);
-      }
-    });
-  };
+    this.$scope.todos.forEach(
+      this.toggleItem.bind(this, completed)
+    );
+  }
+
+  toggleItem(completed, todo, index) {
+    if (todo.completed !== completed) {
+      this.toggleCompleted(todo, completed);
+    }
+  }
 }

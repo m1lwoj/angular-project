@@ -2,7 +2,7 @@
 
 <section id="todoapp">
     <header id="header">
-        <h1>todos</h1>
+        <h1>To do</h1>
         <form id="todo-form" ng-submit="todo.addTodo()">
             <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="saving" autofocus>
         </form>
@@ -11,14 +11,14 @@
         <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="todo.markAll(allChecked)">
         <label for="toggle-all">Mark all as complete</label>
         <ul id="todo-list">
-            <li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+            <li ng-repeat="tod in todos | filter:statusFilter track by $index" ng-class="{completed: completed, editing: todo == editedTodo}">
                 <div class="view">
-                    <input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="todo.toggleCompleted(todo)">
-                    <label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
-                    <button class="destroy" ng-click="todo.removeTodo(todo)"></button>
+                    <input class="toggle" type="checkbox" ng-model="tod.completed" ng-change="todo.toggleCompleted(todo)">
+                    <label ng-dblclick="todo.editTodo(tod)">{{tod.title}}</label>
+                      <button class="destroy" id="edittodo" ng-click="todo.removeTodo(tod)"></button>
                 </div>
-                <form ng-submit="todo.saveEdits(todo, 'submit')">
-                    <input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')" todo-focus="todo == editedTodo">
+                <form ng-submit="todo.saveEdits(tod, 'submit')">
+                    <input class="edit"  ng-blur="todo.saveEdits(tod, 'blur')" todo-focus>
                 </form>
             </li>
         </ul>
@@ -29,15 +29,21 @@
 					</span>
         <ul id="filters">
             <li>
-                <a ng-class="{selected: status == ''} " href="#/">All</a>
+                <a ng-click="todo.changeStatus('')" href="#/">All</a>
             </li>
             <li>
-                <a ng-class="{selected: status == 'active'}" href="#/active">Active</a>
+                <a ng-click="todo.changeStatus('active')" href="#/active">Active</a>
             </li>
             <li>
-                <a ng-class="{selected: status == 'completed'}" href="#/completed">Completed</a>
+                <a ng-click="todo.changeStatus('completed')" href="#/completed">Completed</a>
             </li>
         </ul>
         <button id="clear-completed" ng-click="todo.clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
+       
     </footer>
+    
+  
+ <button id="clear-completed" ng-click="todo.test()">Clear completed</button>
+
 </section>
+

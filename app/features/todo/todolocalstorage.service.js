@@ -2,7 +2,7 @@ export default class ToDoLocalStorageService {
   constructor($q) {
 		this.$q = $q;
 		this.STORAGE_ID = 'todos-angularjs';
-		this.todos = new Array();
+		this.todos = this._getFromLocalStorage();
 	}
 
 	_getFromLocalStorage() {
