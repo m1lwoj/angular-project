@@ -1,27 +1,12 @@
 export default class ToDoLocalStorageService {
-	constructor($q, $firebaseArray) {
+  constructor($q) {
 		this.$q = $q;
 		this.STORAGE_ID = 'todos-angularjs';
-		this.firebaseArray = $firebaseArray;
 		this.todos = this._getFromLocalStorage();
-
-
-		// this.notes.$loaded()
-		// 	.then(function(aa) {
-		// 		console.log(aa);
-		// 	})
-		// 	.catch(function(err) {
-		// 		console.error(err);
-		// 	});
-
 	}
 
 	_getFromLocalStorage() {
-		let ref = new Firebase("https://todo-project.firebaseio.com/tasks");
-		return this.firebaseArray(ref);
-
-
-		// return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
+		return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
 	}
 
 	_saveToLocalStorage(todos) {
