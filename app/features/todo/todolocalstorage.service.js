@@ -25,6 +25,7 @@ export default class ToDoLocalStorageService {
 	}
 
 	_saveToLocalStorage(todos) {
+		
 		localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
 	}
 
@@ -46,9 +47,8 @@ export default class ToDoLocalStorageService {
 	delete(todo) {
 		var deferred = this.$q.defer();
 
-		this.todos.splice(this.todos.indexOf(todo), 1);
+		this.todos.$remove(todo);
 
-		this._saveToLocalStorage(this.todos);
 		deferred.resolve(this.todos);
 
 		return deferred.promise;
@@ -66,9 +66,8 @@ export default class ToDoLocalStorageService {
 	insert(todo) {
 		var deferred = this.$q.defer();
 
-		this.todos.push(todo);
-
-		this._saveToLocalStorage(this.todos);
+		this.todos.$add(todo);
+		
 		deferred.resolve(this.todos);
 
 		return deferred.promise;
@@ -79,7 +78,6 @@ export default class ToDoLocalStorageService {
 
 		this.todos[index] = todo;
 
-		this._saveToLocalStorage(this.todos);
 		deferred.resolve(this.todos);
 
 		return deferred.promise;

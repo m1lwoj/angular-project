@@ -1,5 +1,5 @@
 export default class ToDoController {
-  constructor($scope, $stateParams, $filter, ToDoStorage) {
+  constructor($scope, $stateParams, $filter, ToDoStorage, LoginStorage) {
   
     'use strict';
   
@@ -8,10 +8,11 @@ export default class ToDoController {
     this.$filter = $filter;
     this.ToDoStorage = ToDoStorage;
     this.$scope.todos = ToDoStorage.todos;
-
-    $scope.newTodo = '';
-    $scope.editedTodo = null;
-    $scope.remainingCount = 0;
+    this.$scope.email = LoginStorage.email;
+  
+    this.$scope.newTodo = '';
+    this.$scope.editedTodo = null;
+    this.$scope.remainingCount = this.$scope.activeCount = this.$scope.mineCount = this.$scope.allTasks = 0;
 
     $scope.$watch('todos', this.watchHandler.bind(this), true);
 
@@ -26,7 +27,8 @@ export default class ToDoController {
   addTodo() {
     var newTodo = {
       title: this.$scope.newTodo.trim(),
-      completed: false
+      completed: false,
+      owner: this.$scope.email
     };
 
     if (!newTodo.title) {
@@ -49,6 +51,8 @@ export default class ToDoController {
       completed: false
     } : (status === 'completed') ? {
       completed: true
+    } : (status === 'mine') ? {
+      owner: this.$scope.email
     } : {};
   }
 
@@ -57,6 +61,9 @@ export default class ToDoController {
       completed: false
     }).length;
     this.$scope.completedCount = this.$scope.todos.length - this.$scope.remainingCount;
+    this.$scope.activeCount = 10;
+    this.$scope.mineCount = 10;
+    this.$scope.allTasks = 10;
     this.$scope.allChecked = !this.$scope.remainingCount;
   }
 
@@ -117,7 +124,6 @@ export default class ToDoController {
   }
 
   removeTodo(todo) {
-    alert('c');
     this.ToDoStorage.delete(todo);
   }
 
