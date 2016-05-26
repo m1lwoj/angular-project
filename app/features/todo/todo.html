@@ -25,18 +25,25 @@
         </ul>
     </section>
     <footer id="footer" ng-show="todos.length" ng-cloak>
-        <span id="todo-count"><strong>{{remainingCount}}</strong>
-			<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+          <span id="todo-count">
+              Mine: <strong>{{(todos|filter:{owner:email}).length}}</strong>
 		</span>
-		 <span id="todo-count"><strong>{{remainingCount}}</strong>
-			<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+		<br>
+       <span id="todo-count">
+              All: <strong>{{todos.length}}</strong>
 		</span>
-		 <span id="todo-count"><strong>{{remainingCount}}</strong>
-			<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
-		</span>       
-		<span id="todo-count"><strong>{{remainingCount}}</strong>
-			<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+        <br>
+	   <span id="todo-count">
+              Done: <strong>{{(todos|filter:{completed:true}).length}}</strong>
 		</span>
+		<br>
+		 <span id="todo-count">
+		     To do: <strong>{{(todos|filter:{completed:false}).length}}</strong>
+		</span>     
+		<br>
+		<!--<span id="todo-count"><strong>{{remainingCount}}</strong>-->
+		<!--	<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>-->
+		<!--</span>-->
         <ul id="filters">
             <li>
                 <a ng-click="todo.changeStatus('')" href="#/tasks/all">All</a>
