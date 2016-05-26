@@ -8,7 +8,7 @@ import ToDoController from './todo.controller';
 
 import ToDoStorage from './todolocalstorage.service';
 
-export default angular.module('app.home', [uirouter, ngRoute, angularFire])
+export default angular.module('app.todo', [uirouter, ngRoute, angularFire])
   .config(routing)
   .service('ToDoStorage', ToDoStorage)
   .controller('ToDoController', ToDoController)

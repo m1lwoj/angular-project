@@ -1,7 +1,8 @@
 export default class ToDoController {
   constructor($scope, $stateParams, $filter, ToDoStorage) {
+  
     'use strict';
-
+  
     this.$scope = $scope;
     this.$stateParams = $stateParams;
     this.$filter = $filter;

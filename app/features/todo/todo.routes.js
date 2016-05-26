@@ -2,7 +2,7 @@ export default function routes($stateProvider, $routeProvider) {
 
   $stateProvider
     .state('todo', {
-      url: '/:status',
+      url: '/tasks/:status',
       template: require('./todo.html'),
       controller: 'ToDoController',
       controllerAs: 'todo'
