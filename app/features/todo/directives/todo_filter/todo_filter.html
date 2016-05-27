@@ -1,0 +1,14 @@
+<li>
+    <a ng-click="todo.changeStatus('')" href="#/tasks/all">All</a>
+</li>
+<li>
+    <a ng-click="todo.changeStatus('mine')" href="#/tasks/mine">Mine</a>
+</li>
+<li>
+    <a ng-click="todo.changeStatus('active')" href="#/tasks/active">Active</a>
+</li>
+<li>
+    <a ng-click="todo.changeStatus('completed')" href="#/tasks/completed">Completed</a>
+</li>
+</ul>
+<button id="clear-completed" ng-click="todo.clearCompletedTodos()" ng-show="completedCount">Clear completed</button>

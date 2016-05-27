@@ -1,0 +1,21 @@
+          <span id="todo-count">
+              Mine: <strong>{{(todos|filter:{owner:email}).length}}</strong>
+		</span>
+		<br>
+       <span id="todo-count">
+              All: <strong>{{todos.length}}</strong>
+		</span>
+        <br>
+	   <span id="todo-count">
+              Done: <strong>{{(todos|filter:{completed:true}).length}}</strong>
+		</span>
+		<br>
+		 <span id="todo-count">
+		     To do: <strong>{{(todos|filter:{completed:false}).length}}</strong>
+		</span>     
+		<br>
+		<!--<span id="todo-count"><strong>{{remainingCount}}</strong>-->
+		<!--	<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>-->
+		<!--</span>-->
+        <ul id="filters">
+     

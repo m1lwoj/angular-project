@@ -29,11 +29,11 @@ export default class ToDoLocalStorageService {
 		localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
 	}
 
-	clearCompleted() {
+	clearCompleted(email) {
 		var deferred = this.$q.defer();
 
 		var incompleteTodos = this.todos.filter(function(todo) {
-			return !todo.completed;
+			return !todo.completed || todo.owner !== email;
 		});
 
 		angular.copy(incompleteTodos, this.todos);

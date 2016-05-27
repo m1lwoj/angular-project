@@ -2,64 +2,13 @@
 
 <section id="todoapp">
     <header id="header">
-        <h1>To do</h1>
-        <form id="todo-form" ng-submit="todo.addTodo()">
-            <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="saving" autofocus>
-        </form>
+        <todo-form></todo-form>
     </header>
-    <section id="main" ng-show="todos.length" ng-cloak>
-        <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="todo.markAll(allChecked)">
-        <label for="toggle-all">Mark all as complete</label>
-        <ul id="todo-list">
-            <li ng-repeat="tod in todos | filter:statusFilter track by $index" ng-class="{completed: completed, editing: todo == editedTodo}">
-                <div class="view">
-                    <input class="toggle" type="checkbox" ng-model="tod.completed" ng-change="todo.toggleCompleted(todo)">
-                    <label ng-dblclick="todo.editTodo(tod)">{{tod.title}} </label>
-                    <label style="color:#BABABA">{{tod.owner}}</label>
-                    <button class="destroy" id="edittodo" ng-click="todo.removeTodo(tod)" ng-hide="tod.owner !== email"></button>
-                </div>
-                <form ng-submit="todo.saveEdits(tod, 'submit')">
-                    <input class="edit" ng-blur="todo.saveEdits(tod, 'blur')" todo-focus>
-                </form>
-            </li>
-        </ul>
+    <section id="main" ng-cloak>
+        <todo-tasks></todo-tasks>
     </section>
-    <footer id="footer" ng-show="todos.length" ng-cloak>
-          <span id="todo-count">
-              Mine: <strong>{{(todos|filter:{owner:email}).length}}</strong>
-		</span>
-		<br>
-       <span id="todo-count">
-              All: <strong>{{todos.length}}</strong>
-		</span>
-        <br>
-	   <span id="todo-count">
-              Done: <strong>{{(todos|filter:{completed:true}).length}}</strong>
-		</span>
-		<br>
-		 <span id="todo-count">
-		     To do: <strong>{{(todos|filter:{completed:false}).length}}</strong>
-		</span>     
-		<br>
-		<!--<span id="todo-count"><strong>{{remainingCount}}</strong>-->
-		<!--	<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>-->
-		<!--</span>-->
-        <ul id="filters">
-            <li>
-                <a ng-click="todo.changeStatus('')" href="#/tasks/all">All</a>
-            </li>
-            <li>
-                <a ng-click="todo.changeStatus('mine')" href="#/tasks/mine">Mine</a>
-            </li>
-            <li>
-                <a ng-click="todo.changeStatus('active')" href="#/tasks/active">Active</a>
-            </li>
-            <li>
-                <a ng-click="todo.changeStatus('completed')" href="#/tasks/completed">Completed</a>
-            </li>
-        </ul>
-        <button id="clear-completed" ng-click="todo.clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
-        
+    <footer id="footer" ng-cloak>
+        <todo-counter></todo-counter>
+        <todo-filter></todo-filter>
     </footer>
-
 </section>

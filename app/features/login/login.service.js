@@ -1,4 +1,4 @@
-export default class ToDoLocalStorageService {
+export default class LoginService {
   constructor($q) {
 		this.$q = $q;
 		this.STORAGE_ID = 'todo-email';

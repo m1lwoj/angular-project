@@ -142,7 +142,7 @@ export default class ToDoController {
   }
 
   clearCompletedTodos() {
-    this.ToDoStorage.clearCompleted();
+    this.ToDoStorage.clearCompleted(this.$scope.email);
   }
 
   changeStatus(status) {
