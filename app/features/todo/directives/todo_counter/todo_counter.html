@@ -1,21 +1,14 @@
-          <span id="todo-count">
-              Mine: <strong>{{(todos|filter:{owner:email}).length}}</strong>
-		</span>
-		<br>
-       <span id="todo-count">
-              All: <strong>{{todos.length}}</strong>
-		</span>
-        <br>
-	   <span id="todo-count">
-              Done: <strong>{{(todos|filter:{completed:true}).length}}</strong>
-		</span>
-		<br>
-		 <span id="todo-count">
-		     To do: <strong>{{(todos|filter:{completed:false}).length}}</strong>
-		</span>     
-		<br>
-		<!--<span id="todo-count"><strong>{{remainingCount}}</strong>-->
-		<!--	<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>-->
-		<!--</span>-->
-        <ul id="filters">
-     
+<ul class="list-group">
+	<li class="list-group-item">Mine: <strong>{{(todos|filter:{owner:email}).length}}</strong></li>
+	<li class="list-group-item">All: <strong>{{todos.length}}</strong></li>
+	<li class="list-group-item">Done: <strong>{{(todos|filter:{completed:true}).length}}</strong></li>
+	<li class="list-group-item">To do: <strong>{{(todos|filter:{completed:false}).length}}</strong></li>
+	<li class="list-group-item">
+		<div class="progress" style="text-align: center">
+			<div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="{{completedCount}}" aria-valuemin="0" aria-valuemax="todos.length" style="width: {{ completedPercentage }}">
+				<span class="progress-value">{{completedCount}} / {{todos.length}} Done </span>
+			</div>
+		</div>
+	</li>
+</ul>
+

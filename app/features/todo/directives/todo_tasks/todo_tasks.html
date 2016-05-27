@@ -1,9 +1,9 @@
 <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="todo.markAll(allChecked)">
 <label for="toggle-all">Mark all as complete</label>
 <ul id="todo-list">
-    <li ng-repeat="tod in todos | filter:statusFilter track by $index" ng-class="{completed: completed, editing: todo == editedTodo}">
-        <div class="view">
-            <input class="toggle" type="checkbox" ng-model="tod.completed" ng-change="todo.toggleCompleted(todo)">
+    <li ng-repeat="tod in todos | filter:statusFilter track by $index">
+        <div class="view" ng-class="todo.completedClass(tod.completed)">
+            <input class="toggle" type="checkbox" ng-model="tod.completed" ng-change="todo.toggleCompleted(tod)">
             <label ng-dblclick="todo.editTodo(tod)">{{tod.title}} </label>
             <label style="color:#BABABA">{{tod.owner}}</label>
             <button class="destroy" id="edittodo" ng-click="todo.removeTodo(tod)" ng-hide="tod.owner !== email"></button>

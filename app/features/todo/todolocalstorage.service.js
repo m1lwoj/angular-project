@@ -76,7 +76,7 @@ export default class ToDoLocalStorageService {
 	put(todo, index) {
 		var deferred = this.$q.defer();
 
-		this.todos[index] = todo;
+		this.todos.$save(todo);
 
 		deferred.resolve(this.todos);
 

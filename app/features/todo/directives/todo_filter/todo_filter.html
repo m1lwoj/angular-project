@@ -1,14 +1,22 @@
-<li>
-    <a ng-click="todo.changeStatus('')" href="#/tasks/all">All</a>
-</li>
-<li>
-    <a ng-click="todo.changeStatus('mine')" href="#/tasks/mine">Mine</a>
-</li>
-<li>
-    <a ng-click="todo.changeStatus('active')" href="#/tasks/active">Active</a>
-</li>
-<li>
-    <a ng-click="todo.changeStatus('completed')" href="#/tasks/completed">Completed</a>
-</li>
+<ul class="nav nav-pills nav-stacked">
+
+    <!--<li role="presentation">-->
+    <!--<span ng-bind='status'>{{$status}}</span>-->
+    <!--    </li>-->
+    <li ng-class="todo.activeClass('all')">
+        <a ng-click="todo.changeStatus('all')" href="#/tasks/all">All</a>
+    </li>
+    <li ng-class="todo.activeClass('mine')">
+        <a ng-click="todo.changeStatus('mine')" href="#/tasks/mine">Mine</a>
+    </li>
+    <li ng-class="todo.activeClass('active')">
+        <a ng-click="todo.changeStatus('active')" href="#/tasks/active">Active</a>
+    </li>
+    <li ng-class="todo.activeClass('completed')">
+        <a ng-click="todo.changeStatus('completed')" href="#/tasks/completed">Completed</a>
+    </li>
+    <li>
 </ul>
-<button id="clear-completed" ng-click="todo.clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
+
+ <button style="width:100%; margin-top:10px" id="clear-completed" ng-click="todo.clearCompletedTodos()" ng-show="completedMineCount" type="button" class="btn btn-danger">Clear completed</button>
+
